@@ -3,6 +3,7 @@ services:
     build:
       context: ./front
       dockerfile: Dockerfile.${NODE_ENV:-dev}
+    image: ${FRONTEND_IMAGE:-ghcr.io/tyujhty/rok-frontend:devops}
     ports:
       - "3001:80"
     volumes:
@@ -10,6 +11,9 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=${NODE_ENV:-development}
+    deploy:
+      mode: replicated
+      replicas: 1
 
   nats:
     image: nats:latest
